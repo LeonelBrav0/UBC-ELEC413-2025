@@ -167,6 +167,7 @@ if __name__ == "__main__":
         try:
             url = "https://stratus.ece.ubc.ca/s/kfHwqfkcxNEMgXs/download"  # Test URL
             url = "https://qdot-nexus.phas.ubc.ca:25683/s/7tXJJJXcty36TFY/download"  # second chip, Sheri, 2025/02/26
+            url = "https://qdot-nexus.phas.ubc.ca:25683/s/WCi9Bfi5twSm8qY/download"  # Latest chip run
             print(f"Using URL: {url}")
             download_path = os.path.join(script_dir,'downloaded')
             filename = download_file(url, output_dir=download_path)

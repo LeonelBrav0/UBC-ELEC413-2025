@@ -1,0 +1,48 @@
+%   Probe mapping
+%   |   Chan 1 <- In
+%   |   Chan 2 <- In
+%   |   Chan 3 <- In
+%   |   Laser  -> Out
+%   |   Chan 4 <- In
+%   |   Chan 5 <- In
+%   |   Chan 6 <- In
+
+basepath = 'measurements\downloaded\ELEC413_2025\2025-02-28_Re-measurement Data_Off-chip Laser\';
+chip_id = 'Chip2b\';
+device_tag = 'LeonelBravo_MZI3\';
+mat_pattern = fullfile(basepath, chip_id, '1310nm_TE\die_1\sweepLaser\', device_tag, '*.mat');
+
+files = dir(mat_pattern);
+
+if isempty(files)
+    error('No .mat files found in the specified directory.');
+end
+
+mat_filepath = fullfile(files(1).folder, files(1).name);
+raw_data = load(mat_filepath);
+
+testResult = raw_data.testResult;
+testStruct = testResult(1);
+
+
+fields = fieldnames(testStruct.rows);
+if length(fields) == 4
+    channel_1 = testStruct.rows.channel_1;
+    channel_2 = testStruct.rows.channel_2;
+    channel_3 = testStruct.rows.channel_3;
+    channel_4 = testStruct.rows.channel_4;
+elseif length(fields) == 6
+    channel_1 = testStruct.rows.channel_1;
+    channel_2 = testStruct.rows.channel_2;
+    channel_3 = testStruct.rows.channel_3;
+    channel_4 = testStruct.rows.channel_4;
+    channel_5 = testStruct.rows.channel_5;
+    channel_6 = testStruct.rows.channel_6;
+else
+    error('Unexpected number of channels');
+end
+
+%ignore DC term
+MZI_out1 = channel_4;
+lambda = testStruct.header.wavelength * 1e-9; %
+
